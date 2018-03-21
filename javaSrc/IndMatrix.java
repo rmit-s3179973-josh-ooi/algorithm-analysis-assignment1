@@ -11,26 +11,42 @@ import java.util.*;
  */
 public class IndMatrix <T extends Object> implements FriendshipGraph<T>
 {
-
+	private boolean edgesExist;
+	private int[][] iMatrix;
+	private Map <T, Integer> vertList;
+	private Map <T, Integer> edgeList;
+	
 	/**
 	 * Contructs empty graph.
 	 */
-    public IndMatrix() {
-    	// Implement me!
+    public IndMatrix() 
+    {
+    	iMatrix = new int[0][0];
+    	vertList = new HashMap<T, Integer>();
+    	edgeList = new HashMap<T, Integer>();
     } // end of IndMatrix()
     
     
-    public void addVertex(T vertLabel) {
-        // Implement me!
+    public void addVertex(T vertLabel) 
+    {
+    	vertList.put(vertLabel, (iMatrix.length+1));
+    	expandArray();
     } // end of addVertex()
 	
     
-    public void addEdge(T srcLabel, T tarLabel) {
+    public void addEdge(T srcLabel, T tarLabel) 
+    {
+    	edgesExist = true;
+    	
+    	edgeList.put(srcLabel, (iMatrix[0].length+1));
+    	expandArray();
+    	iMatrix[vertList.get(srcLabel)][edgeList.get(tarLabel)]++;
         // Implement me!
     } // end of addEdge()
 	
 
-    public ArrayList<T> neighbours(T vertLabel) {
+    public ArrayList<T> neighbours(T vertLabel) 
+    {
         ArrayList<T> neighbours = new ArrayList<T>();
         
         // Implement me!
@@ -39,22 +55,26 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     } // end of neighbours()
     
     
-    public void removeVertex(T vertLabel) {
+    public void removeVertex(T vertLabel) 
+    {
         // Implement me!
     } // end of removeVertex()
 	
     
-    public void removeEdge(T srcLabel, T tarLabel) {
+    public void removeEdge(T srcLabel, T tarLabel) 
+    {
         // Implement me!
     } // end of removeEdges()
 	
     
-    public void printVertices(PrintWriter os) {
+    public void printVertices(PrintWriter os) 
+    {
         // Implement me!
     } // end of printVertices()
 	
     
-    public void printEdges(PrintWriter os) {
+    public void printEdges(PrintWriter os) 
+    {
         // Implement me!
     } // end of printEdges()
     
@@ -65,5 +85,28 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
         // if we reach this point, source and target are disconnected
         return disconnectedDist;    	
     } // end of shortestPathDistance()
+    
+    private void expandArray() 
+    {
+    	if(!edgesExist)
+    	{
+    		return;
+    	}
+    	
+    	int newArray[][] = new int[vertList.size()][edgeList.size()];
+    	
+    	for(int i = 0; i < vertList.size(); i++)
+    	{
+    		for(int j = 0; j < edgeList.size(); j++)
+    		{
+    			newArray[i][j] = iMatrix[i][j];
+    		}
+    	}
+    	
+    	iMatrix = newArray;
+    	
+    	newArray = null;
+    }
+    
     
 } // end of class IndMatrix
