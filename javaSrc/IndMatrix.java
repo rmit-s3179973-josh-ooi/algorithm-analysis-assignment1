@@ -172,7 +172,10 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     
     public void printVertices(PrintWriter os) 
     {
-    	os.println(vertList.keySet());
+    	for(T vertex: vertList.keySet())
+    	{
+    		System.out.println(vertex + " ");
+    	}
     } // end of printVertices()
 	
     
@@ -192,59 +195,59 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     		System.err.println("Invalid Vertecies");
     		return 0;
     	}
+    	int count = 0;
     	
         Queue<T> q = new LinkedList<T>();
-        Map<T, Boolean> visited = new HashMap<T, Boolean>();
-        List<Edge<T>> route = new ArrayList<Edge<T>>();
+        boolean[] visited = new boolean[vertList.size()];
+        Edge<T> edge;
+        T currentV;
         
-        T currentV = vertLabel1;
-        
-        q.add(currentV);
-        
-        visited.put(currentV, true);
-    	
+        q.add(vertLabel1);
+
         while(!q.isEmpty())
         {
-            currentV = q.remove();
-            if (currentV.equals(vertLabel2))
+            currentV = q.poll();
+            visited[vertList.get(currentV)] = true;
+            count++;
+            for(int e: edgeList.values())
             {
-                break;
-            }
-            else
-            {
-                for(T nextVert : vertList.keySet())
-                {
-                	for(Edge<T> e: edgeList.keySet())
-                	{
-	                    if(!visited.containsKey(nextVert))
-	                    {
-	                    	visited.put(nextVert, true);
-	                    	if(e.getSrcVertex().equals(currentV) && e.getTarVertex().equals(nextVert))
-	                    	{
-	                    		q.add(nextVert); 
-	   		                    route.add(e);
-	                    	}
-		                 
-	                    }
-                	}
-                }
+	            if (iMatrix[vertList.get(currentV)][e]==1)
+	            {
+	            	edge = getKey(e);
+	            	if(edge.getSrcVertex().equals(currentV))
+	            	{
+	            		if(edge.getTarVertex().equals(vertLabel2))
+	            		{
+	            			return count;
+	            		}else {
+	            			q.add(edge.getTarVertex());
+	            		}
+	            	}
+	                
+	            }
+	            
+	         
             }
         }	
     	
-        if (!currentV.equals(vertLabel2))
-        {
-        	 return disconnectedDist;
-        }  	
-        else
-        {
-        	return route.size();
-        }
+        
+        return disconnectedDist;
+        
     } // end of shortestPathDistance()
+    
+    private Edge<T> getKey(int value)
+    {
+    	for(Edge<T> e: edgeList.keySet())
+    	{
+    		if(edgeList.get(e) == value)
+    			return e;
+    	}
+    	return null;
+    }
     
     private void expandArray() 
     {
     	int newArray[][] = new int[vertList.size()][edgeList.size()];
-    	System.out.println("SIZES:"+vertList.size() + " " + edgeList.size());
     	
     	for(int i = 0; i < iMatrix.length; i++)
     	{
@@ -315,6 +318,6 @@ class Edge <T extends Object>
 	
 	public String printEdge()
 	{
-		return(new String(srcVertex + ""+tarVertex));
+		return(new String(srcVertex + " " + tarVertex));
 	}
 }
