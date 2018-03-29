@@ -28,6 +28,14 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     
     public void addVertex(T vertLabel) 
     {	
+    	for(T v: vertList.keySet())
+    	{
+    		if(v.equals(vertLabel))
+    		{
+    			System.err.println("Vertex already exists");
+    			return;
+    		}
+    	}
     	vertList.put(vertLabel, (iMatrix.length));
 
     	expandArray();
@@ -36,6 +44,17 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     
     public void addEdge(T srcLabel, T tarLabel) 
     {
+    	if(!vertList.containsKey(srcLabel) || !vertList.containsKey(srcLabel))
+    	{
+    		System.err.println("Invalid vertex pair");
+			return;
+    	}
+    	
+    	if(edgeExists(srcLabel, tarLabel))
+    	{
+    		System.err.println("Edge already exists");
+			return;
+    	}
     	Edge<T> newEdge = new Edge<T>(srcLabel, tarLabel);
     	
     	edgeList.put(newEdge, (iMatrix[0].length));
@@ -286,7 +305,8 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     	Edge<T> e = new Edge<T>(srcLabel, tarLabel);
     	for(Edge<T> i: edgeList.keySet())
     	{
-    		if(i.getSrcVertex().equals(e.getSrcVertex()) && i.getTarVertex().equals(e.getTarVertex()))
+    		if(i.getSrcVertex().equals(e.getSrcVertex()) && i.getTarVertex().equals(e.getTarVertex()) 
+    				|| (i.getTarVertex().equals(e.getSrcVertex()) && i.getSrcVertex().equals(e.getTarVertex())))
     		{
     			return true;
     		}
