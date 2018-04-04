@@ -40,7 +40,6 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     	}
     	
     	vertList.put(vertLabel, (iMatrix.length));
-    	System.out.println(vertLabel + " added");
     	expandArray();
     } // end of addVertex()
 	
@@ -66,8 +65,6 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     	
     	iMatrix[vertList.get(srcLabel)][edgeList.get(newEdge)]=1;
     	iMatrix[vertList.get(tarLabel)][edgeList.get(newEdge)]=1;
-    	
-    	System.out.println(newEdge.printEdge() + " edge added");
     } // end of addEdge()
     
     public void removeVertex(T vertLabel) 
@@ -226,7 +223,10 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
 	            		}
 	            		else 
 	            		{
-	            			q.add(edge.getTarVertex());
+	            			if(visited[vertList.get(edge.getTarVertex())] != true)
+	            			{
+	            				q.add(edge.getTarVertex());
+	            			}
 	            		}
 	            	}
 	            	else if(edge.getTarVertex().equals(currentV))
@@ -237,7 +237,10 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
 	            		}
 	            		else 
 	            		{
-	            			q.add(edge.getSrcVertex());
+	            			if(visited[vertList.get(edge.getSrcVertex())] != true)
+	            			{
+	            				q.add(edge.getSrcVertex());
+	            			}
 	            		}
 	            	}
 	                
@@ -245,7 +248,7 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
 	            
 	         
             }
-        }	
+        }
         return disconnectedDist;
     } // end of shortestPathDistance()
    
