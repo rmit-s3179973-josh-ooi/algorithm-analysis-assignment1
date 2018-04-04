@@ -3,3 +3,4 @@ javaSrc/FriendshipGraph.class
 javaSrc/GraphTester.class
 javaSrc/IndMatrix.class
 /.DS_Store
+*.out
