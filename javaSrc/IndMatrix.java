@@ -34,12 +34,13 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     	{
     		if(v.equals(vertLabel))
     		{
-    			System.err.println("Vertex already exists");
+    			System.err.println("Vertex already exists: " + vertLabel);
     			return;
     		}
     	}
     	
     	vertList.put(vertLabel, (iMatrix.length));
+    	System.out.println(vertLabel + " added");
     	expandArray();
     } // end of addVertex()
 	
@@ -65,6 +66,8 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     	
     	iMatrix[vertList.get(srcLabel)][edgeList.get(newEdge)]=1;
     	iMatrix[vertList.get(tarLabel)][edgeList.get(newEdge)]=1;
+    	
+    	System.out.println(newEdge.printEdge() + " edge added");
     } // end of addEdge()
     
     public void removeVertex(T vertLabel) 
@@ -209,7 +212,7 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
             currentV = q.poll();
             visited[vertList.get(currentV)] = true;
             count++;
-            for(int e: edgeList.values())
+            for(int e: this.edgeList.values())
             {
             	//Checks for edges stemming from current vertex and gets their tarVertices
 	            if (iMatrix[vertList.get(currentV)][e]==1)
@@ -224,6 +227,17 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
 	            		else 
 	            		{
 	            			q.add(edge.getTarVertex());
+	            		}
+	            	}
+	            	else if(edge.getTarVertex().equals(currentV))
+	            	{
+	            		if(edge.getSrcVertex().equals(vertLabel2))
+	            		{
+	            			return count;
+	            		}
+	            		else 
+	            		{
+	            			q.add(edge.getSrcVertex());
 	            		}
 	            	}
 	                
