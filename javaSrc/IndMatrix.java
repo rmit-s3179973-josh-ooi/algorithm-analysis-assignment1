@@ -143,6 +143,12 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     
     public ArrayList<T> neighbours(T vertLabel) 
     {
+    	if(!vertList.containsKey(vertLabel))
+    	{
+    		System.err.println("Invalid Vertex");
+    		return null;
+    	}
+    	
     	ArrayList<T> neighbours = new ArrayList<T>();
     	
     	for(T checkVer : vertList.keySet())
@@ -186,7 +192,7 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     	}
     } // end of printEdges()
     
-    
+    //Breadth-first based search method for finding shortest path
     public int shortestPathDistance(T vertLabel1, T vertLabel2) 
     {	
     	if(!vertList.containsKey(vertLabel1) || !vertList.containsKey(vertLabel2))
@@ -194,59 +200,45 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     		System.err.println("Invalid Vertecies");
     		return 0;
     	}
-    	int count = 0;
-    	
+    	 
+    	Map<T,T> path = new HashMap<T,T>();
         Queue<T> q = new LinkedList<T>();
-        boolean[] visited = new boolean[vertList.size()];
-        Edge<T> edge;
         T currentV;
         
         q.add(vertLabel1);
 
-        //Builds up a queue of vertices from target to source based on edge connections
         while(!q.isEmpty())
         {
             currentV = q.poll();
-            visited[vertList.get(currentV)] = true;
-            count++;
-            for(int e: this.edgeList.values())
+            
+            //This block extracts the shortest path from the hashmap and returns its length
+            if(currentV.equals(vertLabel2))
             {
-            	//Checks for edges stemming from current vertex and gets their tarVertices
-	            if (iMatrix[vertList.get(currentV)][e]==1)
-	            {
-	            	edge = getKey(e);
-	            	if(edge.getSrcVertex().equals(currentV))
-	            	{
-	            		if(edge.getTarVertex().equals(vertLabel2))
-	            		{
-	            			return count;
-	            		}
-	            		else 
-	            		{
-	            			if(visited[vertList.get(edge.getTarVertex())] != true)
-	            			{
-	            				q.add(edge.getTarVertex());
-	            			}
-	            		}
-	            	}
-	            	else if(edge.getTarVertex().equals(currentV))
-	            	{
-	            		if(edge.getSrcVertex().equals(vertLabel2))
-	            		{
-	            			return count;
-	            		}
-	            		else 
-	            		{
-	            			if(visited[vertList.get(edge.getSrcVertex())] != true)
-	            			{
-	            				q.add(edge.getSrcVertex());
-	            			}
-	            		}
-	            	}
-	                
-	            }
-	            
-	         
+            	 List<T> shortestPath = new ArrayList<>();
+            	 T vertex = vertLabel2;
+            	 while(vertex != null) 
+            	 {
+            	    shortestPath.add(vertex);
+            	    vertex = path.get(vertex);
+            	    System.out.println("Adding vertex: " + vertex);
+            	 }
+            	 
+            	 //The starting vertex is not counted
+            	 shortestPath.remove(vertLabel1);
+            	 return shortestPath.size();
+            }
+            
+            /*Vertices and their neighbours are added to the hashmap until the level containing the target is reached;
+            	it therefore will contain the edges comprising the shortest path*/
+            for(T neighbour: neighbours(currentV))
+            {
+            	if(path.containsKey(neighbour) || path.containsValue(neighbour))
+            	{
+            		continue;
+            	}
+            	System.out.println("Checking neighbour: " + neighbour);
+            	path.put(neighbour, currentV);
+            	q.add(neighbour);
             }
         }
         return disconnectedDist;
@@ -313,6 +305,8 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     	}
     	return false;
     }
+    
+    
 } // end of class IndMatrix
 
 //Helper class to contain a vertex pair(edge) in an object
@@ -334,6 +328,26 @@ class Edge <T extends Object>
 
 	public T getSrcVertex() 
 	{
+		return srcVertex;
+	}
+	
+	public boolean isConnected(T vertex)
+	{
+		if(vertex.equals(this.srcVertex) || vertex.equals(this.tarVertex))
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public T getOtherVertex(T vertex)
+	{
+		if(vertex.equals(this.srcVertex))
+		{
+			return tarVertex;
+		}
+		
 		return srcVertex;
 	}
 	
