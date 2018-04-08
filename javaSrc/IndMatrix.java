@@ -30,14 +30,7 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     
     public void addVertex(T vertLabel) 
     {	
-    	for(T v: vertList.keySet())
-    	{
-    		if(v.equals(vertLabel))
-    		{
-    			System.err.println("Vertex already exists: " + vertLabel);
-    			return;
-    		}
-    	}
+    	if(vertList.containsKey(vertLabel));
     	
     	vertList.put(vertLabel, (iMatrix.length));
     	expandArray();
@@ -91,8 +84,6 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     	
     } // end of removeVertex()
    
-    
-    //Remove an edge from both the hashmap and array
     public void removeEdge(T srcLabel, T tarLabel) 
     {
     	if(!edgeExists(srcLabel, tarLabel))
@@ -155,7 +146,7 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     	{
 	    	for(int i = 0; i<iMatrix[0].length; i++)
 	    	{
-	    		if(checkVer.toString().equals(vertLabel.toString()))
+	    		if(checkVer.equals(vertLabel))
 	    		{
 	    			break;
 	    		}
@@ -220,7 +211,6 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
             	 {
             	    shortestPath.add(vertex);
             	    vertex = path.get(vertex);
-            	    System.out.println("Adding vertex: " + vertex);
             	 }
             	 
             	 //The starting vertex is not counted
@@ -236,7 +226,6 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
             	{
             		continue;
             	}
-            	System.out.println("Checking neighbour: " + neighbour);
             	path.put(neighbour, currentV);
             	q.add(neighbour);
             }
@@ -328,26 +317,6 @@ class Edge <T extends Object>
 
 	public T getSrcVertex() 
 	{
-		return srcVertex;
-	}
-	
-	public boolean isConnected(T vertex)
-	{
-		if(vertex.equals(this.srcVertex) || vertex.equals(this.tarVertex))
-		{
-			return true;
-		}
-		
-		return false;
-	}
-	
-	public T getOtherVertex(T vertex)
-	{
-		if(vertex.equals(this.srcVertex))
-		{
-			return tarVertex;
-		}
-		
 		return srcVertex;
 	}
 	
