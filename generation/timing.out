@@ -1,23 +1,72 @@
-AV 4039: 0.038195664 sec 
-AV 4040: 0.034543414 sec 
-Add Vertex average time : 0.036369539
+AV 4039: 0.038481824 sec 
+AV 4040: 0.036996987 sec 
+AV 4041: 0.031041216 sec 
+AV 4042: 0.033355976 sec 
+AV 4043: 0.039408503 sec 
+AV 4044: 0.036977657 sec 
+AV 4045: 0.030712216 sec 
+AV 4046: 0.031606609 sec 
+AV 4047: 0.031697707 sec 
+AV 4048: 0.037811306 sec 
+Add Vertex average time : 0.0348090001
 
-AE 4039 100: 4.3429E-5 sec 
-AE 4039 300: 2.8022E-5 sec 
-AE 4039 1405: 2.3139E-5 sec 
-AE 4039 1500: 4.247E-5 sec 
-AE 4040 188: 3.0034E-5 sec 
-AE 4040 280: 2.6958E-5 sec 
-AE 4040 150: 3.2266E-5 sec 
-AE 4040 320: 2.8052E-5 sec 
-Add Edge average time : 3.1796249999999996E-5
+AE 4039 100: 1.487E-6 sec 
+AE 4039 300: 1.489E-6 sec 
+AE 4039 1405: 8.75E-7 sec 
+AE 4039 1500: 5.67E-7 sec 
+AE 4040 188: 7.22E-7 sec 
+AE 4040 280: 6.13E-7 sec 
+AE 4040 150: 4.75E-7 sec 
+AE 4040 320: 6.89E-7 sec 
+AE 4042 4040: 4.53E-7 sec 
+AE 4041 1864: 6.88E-7 sec 
+Add Edge average time : 8.058E-7
 
-neighbour average time : 0.0
+N 100: 0.002084848 sec 
+N 500: 0.00631068 sec 
+N 600: 8.41362E-4 sec 
+N 700: 1.53899E-4 sec 
+N 1300: 0.001119295 sec 
+N 450: 0.001065327 sec 
+N 900: 5.88605E-4 sec 
+N 345: 4.33744E-4 sec 
+N 650: 5.38609E-4 sec 
+N 444: 0.002101098 sec 
+neighbour average time : 0.0015237467
 
-S 4039 4040: 0.001446367 sec 
-shortest path average time : 0.001446367
+S 4039 4040: 0.029074533 sec 
+S 1300 100: 0.019062074 sec 
+S 450 650: 0.014213401 sec 
+S 60 1243: 0.009001545 sec 
+S 111 55: 7.1019E-5 sec 
+S 123 542: 0.030916271 sec 
+S 505 232: 0.049712676 sec 
+S 222 1299: 0.008270011 sec 
+S 773 1100: 0.012698545 sec 
+S 1000 20: 0.007642691 sec 
+shortest path average time : 0.0180662766
 
-remove Vertex average time : 0.0
+RV 4039: 0.017699197 sec 
+RV 4040: 0.014094567 sec 
+RV 4041: 0.007725868 sec 
+RV 4042: 0.007834267 sec 
+RV 4043: 0.00777462 sec 
+RV 4044: 0.00777003 sec 
+RV 4045: 0.007723977 sec 
+RV 4046: 0.007490984 sec 
+RV 4047: 0.010429483 sec 
+RV 4048: 0.009561823 sec 
+remove Vertex average time : 0.0098104816
 
-remove edge average time : 0.0
+RE 4039 100: 1.2823E-5 sec 
+RE 4039 300: 1.986E-6 sec 
+RE 4039 1405: 1.681E-6 sec 
+RE 4039 1500: 1.311E-6 sec 
+RE 4040 188: 1.491E-6 sec 
+RE 4040 280: 1.156E-6 sec 
+RE 4040 150: 1.211E-6 sec 
+RE 4040 320: 1.079E-6 sec 
+RE 4042 4040: 1.183E-6 sec 
+RE 4041 1864: 1.114E-6 sec 
+remove edge average time : 2.5035E-6
 
