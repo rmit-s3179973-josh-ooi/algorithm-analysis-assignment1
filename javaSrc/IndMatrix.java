@@ -29,32 +29,34 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     
     public void addVertex(T vertLabel) 
     {	
-    	if(!vertList.containsKey(vertLabel));
+    	if(!vertexExists(vertLabel))
     	{
-    		vertList.put(vertLabel, (iMatrix.length));
-        	expandArray();  		
+	    	vertList.put(vertLabel, (iMatrix.length));
+	        expandArray();
     	}
-    	
     } // end of addVertex()
     
     public void addEdge(T srcLabel, T tarLabel) 
     {
-    	if(vertList.containsKey(srcLabel) && vertList.containsKey(tarLabel) && !edgeExists(srcLabel, tarLabel) && !srcLabel.equals(tarLabel))
+    	if(vertexExists(srcLabel) && vertexExists(tarLabel) && !edgeExists(srcLabel, tarLabel) && !srcLabel.equals(tarLabel))
     	{
 	    	Edge<T> newEdge = new Edge<T>(srcLabel, tarLabel);
 	    	
 	    	edgeList.put(newEdge, (iMatrix[0].length));
-	    	expandArray();
 	    	
+	    	expandArray();
+
 	    	iMatrix[vertList.get(srcLabel)][edgeList.get(newEdge)]=1;
 	    	iMatrix[vertList.get(tarLabel)][edgeList.get(newEdge)]=1;
+
+	    	
     	}
     	
     } // end of addEdge()
-    
+
     public void removeVertex(T vertLabel) 
     {
-    	if(vertList.containsKey(vertLabel))
+    	if(vertexExists(vertLabel))
     	{
 	    	for(T v:vertList.keySet())
 	    	{
@@ -74,7 +76,7 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
    
     public void removeEdge(T srcLabel, T tarLabel) 
     {
-    	if(vertList.containsKey(srcLabel) && vertList.containsKey(tarLabel) && edgeExists(srcLabel, tarLabel))
+    	if(vertexExists(srcLabel) && vertexExists(tarLabel) && edgeExists(srcLabel, tarLabel))
     	{
 	    	Iterator<Edge<T>> iter = edgeList.keySet().iterator();
 	    	
@@ -88,9 +90,7 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
 	    			updateEdges();
 	    			continue;
 	    		}
-	    	}
-		    	
-	    	updateEdges();
+	    	}	
 	    	contractArray(); 
     	}
     } // end of removeEdges()
@@ -120,7 +120,7 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     public ArrayList<T> neighbours(T vertLabel) 
     {
     	ArrayList<T> neighbours = new ArrayList<T>();
-    	if(vertList.containsKey(vertLabel))
+    	if(vertexExists(vertLabel))
     	{
 	    	//Consult each vertex in the array to see if it shares edges with vertLabel
 	    	for(T checkVer : vertList.keySet())
@@ -159,7 +159,7 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     //Breadth-first based search method for finding shortest path
     public int shortestPathDistance(T vertLabel1, T vertLabel2) 
     {	
-    	if(vertList.containsKey(vertLabel1) && vertList.containsKey(vertLabel2) && !vertLabel1.equals(vertLabel2))
+    	if(vertexExists(vertLabel1) && vertexExists(vertLabel2) && !vertLabel1.equals(vertLabel2))
     	{
 	    	Map<T,T> path = new HashMap<T,T>();
 	        Queue<T> q = new LinkedList<T>();
@@ -180,7 +180,6 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
 	            	    shortestPath.add(vertex);
 	            	    vertex = path.get(vertex);
 	            	 }
-	            	 
 	            	 //The starting vertex is not counted
 	            	 shortestPath.remove(vertLabel1);
 	            	 return shortestPath.size();
@@ -217,7 +216,6 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     	}
     	
     	iMatrix = newArray;
-    	
     	newArray = null;
     }
     
@@ -239,6 +237,17 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     	newArray = null;
     }
     
+    private boolean vertexExists(T vertLabel)
+    {
+    	for(T vertex: vertList.keySet())
+    	{
+    		if(vertex.equals(vertLabel))
+    		{
+    			return true;
+    		}
+    	}
+    	return false;
+    }
     //Check if edge exists in iMatrix
     private boolean edgeExists(T srcLabel, T tarLabel)
     {	
@@ -257,7 +266,7 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     
 } // end of class IndMatrix
 
-//Helper class to contain a vertex pair(edge) within an object
+//Helper class to contain a vertex pair(edge) in an object
 class Edge <T extends Object> 
 {
 	private T tarVertex;
@@ -288,4 +297,4 @@ class Edge <T extends Object>
 	{
 		return(new String(tarVertex + " " + srcVertex));
 	}
-} // end of class Edge
+}
