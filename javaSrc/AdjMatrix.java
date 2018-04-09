@@ -31,22 +31,26 @@ public class AdjMatrix <T extends Object> implements FriendshipGraph<T>
     
     public void addVertex(T vertLabel) 
     {
-    	 
-        verIndecies.put(vertLabel, verIndecies.size());
-         
-	    expandArray();
-	    	
-        
+    	if(!verIndecies.containsKey(vertLabel)) {
+    		verIndecies.put(vertLabel, verIndecies.size());
+    		expandArray();
+    	}
     } // end of addVertex()
 	
     
     public void addEdge(T srcLabel, T tarLabel) 
     {
-    	int srcIndex = verIndecies.get(srcLabel);
-    	int tarIndex = verIndecies.get(tarLabel);
     	
-    	this.aMatrix[srcIndex][tarIndex]= 1;
-    	this.aMatrix[tarIndex][srcIndex]= 1;
+    	Integer srcIndex = verIndecies.get(srcLabel);
+    	Integer tarIndex = verIndecies.get(tarLabel);
+    	
+    	if(srcIndex != null && tarIndex != null)
+    	{
+    		System.out.printf("vertex %s : %d, vertex %s: %d \n", srcLabel.toString(), srcIndex, tarLabel.toString(), tarIndex);
+        	this.aMatrix[srcIndex][tarIndex]= 1;
+        	this.aMatrix[tarIndex][srcIndex]= 1;
+    	}
+    	
     	
     } // end of addEdge()
 	

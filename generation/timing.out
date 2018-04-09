@@ -1,0 +1,23 @@
+AV 4039: 0.038195664 sec 
+AV 4040: 0.034543414 sec 
+Add Vertex average time : 0.036369539
+
+AE 4039 100: 4.3429E-5 sec 
+AE 4039 300: 2.8022E-5 sec 
+AE 4039 1405: 2.3139E-5 sec 
+AE 4039 1500: 4.247E-5 sec 
+AE 4040 188: 3.0034E-5 sec 
+AE 4040 280: 2.6958E-5 sec 
+AE 4040 150: 3.2266E-5 sec 
+AE 4040 320: 2.8052E-5 sec 
+Add Edge average time : 3.1796249999999996E-5
+
+neighbour average time : 0.0
+
+S 4039 4040: 0.001446367 sec 
+shortest path average time : 0.001446367
+
+remove Vertex average time : 0.0
+
+remove edge average time : 0.0
+
