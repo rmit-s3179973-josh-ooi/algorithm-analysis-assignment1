@@ -46,7 +46,6 @@ public class AdjMatrix <T extends Object> implements FriendshipGraph<T>
     	
     	if(srcIndex != null && tarIndex != null)
     	{
-    		System.out.printf("vertex %s : %d, vertex %s: %d \n", srcLabel.toString(), srcIndex, tarLabel.toString(), tarIndex);
         	this.aMatrix[srcIndex][tarIndex]= 1;
         	this.aMatrix[tarIndex][srcIndex]= 1;
     	}
@@ -75,33 +74,39 @@ public class AdjMatrix <T extends Object> implements FriendshipGraph<T>
     
     public void removeVertex(T vertLabel) 
     {
-    	int removevalue = this.verIndecies.get(vertLabel);
-    	
-    	this.verIndecies.remove(vertLabel);
-    	
-    	for(Map.Entry<T, Integer> entry : this.verIndecies.entrySet()) {
-    	
-    		T key = entry.getKey();
-    	    int value = entry.getValue();
-    	    
-    	    if(value > removevalue)
-    	    {
-    	    	this.verIndecies.replace(key, value-1);
-    	    }
+    	if(this.verIndecies.containsKey(vertLabel))
+    	{
+    		int removevalue = this.verIndecies.get(vertLabel);
+        	
+        	this.verIndecies.remove(vertLabel);
+        	
+        	for(Map.Entry<T, Integer> entry : this.verIndecies.entrySet()) {
+        	
+        		T key = entry.getKey();
+        	    int value = entry.getValue();
+        	    
+        	    if(value > removevalue)
+        	    {
+        	    	this.verIndecies.replace(key, value-1);
+        	    }
+        	}
+        	
+        	removeVertexFromMatrix(removevalue);
     	}
     	
-    	removeVertexFromMatrix(removevalue);
-        // Implement me!
     } // end of removeVertex()
 	
     
     public void removeEdge(T srcLabel, T tarLabel) 
     {
-    	int srcIndex = verIndecies.get(srcLabel);
-    	int tarIndex = verIndecies.get(tarLabel);
+    	Integer srcIndex = verIndecies.get(srcLabel);
+    	Integer tarIndex = verIndecies.get(tarLabel);
+    	if(srcIndex != null && tarIndex != null)
+    	{
+    		aMatrix[srcIndex][tarIndex] = 0;
+        	aMatrix[tarIndex][srcIndex] = 0;
+    	}
     	
-    	aMatrix[srcIndex][tarIndex] = 0;
-    	aMatrix[tarIndex][srcIndex] = 0;
 
     } // end of removeEdges()
 	

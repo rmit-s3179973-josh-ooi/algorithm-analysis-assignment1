@@ -319,6 +319,7 @@ public class GraphTiming
 		    		graph.addVertex(srcLabel);
 		    		graph.addVertex(tarLabel);
 		    		graph.addEdge(srcLabel, tarLabel);
+		    		System.out.printf("vertex %s , vertex %s \n", srcLabel, tarLabel);
 		    	}			
 			}
 			catch (FileNotFoundException ex) {
