@@ -119,20 +119,26 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     
     public ArrayList<T> neighbours(T vertLabel) 
     {
-    	ArrayList<T> neighbours = new ArrayList<T>();
-    	if(vertexExists(vertLabel))
+     	ArrayList<T> neighbours = new ArrayList<T>();
+    	
+    	for(T checkVer : vertList.keySet())
     	{
-	    	//Consult each vertex in the array to see if it shares edges with vertLabel
-	    	for(T checkVer : vertList.keySet())
+	    	for(int i = 0; i<iMatrix[0].length; i++)
 	    	{
-		    		if(edgeExists(checkVer, vertLabel))
-		    		{
-		    			neighbours.add(checkVer);
-		    			continue;
-		    		}
+	    		if(checkVer.toString().equals(vertLabel.toString()))
+	    		{
+	    			break;
+	    		}
+	    		if((iMatrix[vertList.get(vertLabel)][i])> 0 && (iMatrix[vertList.get(vertLabel)][i]) == (iMatrix[vertList.get(checkVer)][i]))
+	    		{
+	    			neighbours.add(checkVer);
+	    			break;
+	    		}
 	    	}
+	    	
     	}
-    	  return neighbours;
+		
+		return neighbours;
     } // end of neighbours()
     
     public void printVertices(PrintWriter os) 
