@@ -29,7 +29,7 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     
     public void addVertex(T vertLabel) 
     {	
-    	if(!vertexExists(vertLabel))
+    	if(!vertList.containsKey(vertLabel))
     	{
 	    	vertList.put(vertLabel, (iMatrix.length));
 	        expandArray();
@@ -38,6 +38,7 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     
     public void addEdge(T srcLabel, T tarLabel) 
     {
+
     	if(!edgeExists(srcLabel, tarLabel) && !srcLabel.equals(tarLabel))
     	{
 	    	Edge<T> newEdge = new Edge<T>(srcLabel, tarLabel);
@@ -46,17 +47,16 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
 	    	
 	    	expandArray();
 
+
 	    	iMatrix[vertList.get(srcLabel)][length]=1;
 	    	iMatrix[vertList.get(tarLabel)][length]=1;
-
-	    	
     	}
     	
     } // end of addEdge()
 
     public void removeVertex(T vertLabel) 
     {
-    	if(vertexExists(vertLabel))
+    	if(vertList.containsKey(vertLabel))
     	{
 	    	for(T v:vertList.keySet())
 	    	{
@@ -76,7 +76,7 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
    
     public void removeEdge(T srcLabel, T tarLabel) 
     {
-    	if(vertexExists(srcLabel) && vertexExists(tarLabel) && edgeExists(srcLabel, tarLabel))
+    	if(vertList.containsKey(srcLabel) && vertList.containsKey(tarLabel) && edgeExists(srcLabel, tarLabel))
     	{
 	    	Iterator<Edge<T>> iter = edgeList.keySet().iterator();
 	    	
@@ -120,19 +120,30 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     public ArrayList<T> neighbours(T vertLabel) 
     {
     	ArrayList<T> neighbours = new ArrayList<T>();
-    	if(vertexExists(vertLabel))
+    	if(!vertList.containsKey(vertLabel))
     	{
-	    	//Consult each vertex in the array to see if it shares edges with vertLabel
-	    	for(T checkVer : vertList.keySet())
-	    	{
-		    		if(edgeExists(checkVer, vertLabel))
-		    		{
-		    			neighbours.add(checkVer);
-		    			continue;
-		    		}
-	    	}
+    		return neighbours;
     	}
-    	  return neighbours;
+
+    	for(T checkVer : vertList.keySet())
+    	{
+	    	for(int i = 0; i<iMatrix[0].length; i++)
+	    	{
+	    		
+	    		if(checkVer.toString().equals(vertLabel.toString()))
+	    		{
+	    			break;
+	    		}
+	    		if((iMatrix[vertList.get(vertLabel)][i])> 0 && (iMatrix[vertList.get(vertLabel)][i]) == (iMatrix[vertList.get(checkVer)][i]))
+	    		{
+	    			neighbours.add(checkVer);
+	    			break;
+	    		}
+	    	}
+	    	
+    	}
+		
+		return neighbours;
     } // end of neighbours()
     
     public void printVertices(PrintWriter os) 
@@ -159,7 +170,7 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     //Breadth-first based search method for finding shortest path
     public int shortestPathDistance(T vertLabel1, T vertLabel2) 
     {	
-    	if(vertexExists(vertLabel1) && vertexExists(vertLabel2) && !vertLabel1.equals(vertLabel2))
+    	if(vertList.containsKey(vertLabel1) && vertList.containsKey(vertLabel2) && !vertLabel1.equals(vertLabel2))
     	{
 	    	Map<T,T> path = new HashMap<T,T>();
 	        Queue<T> q = new LinkedList<T>();
@@ -237,17 +248,6 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     	newArray = null;
     }
     
-    private boolean vertexExists(T vertLabel)
-    {
-    	for(T vertex: vertList.keySet())
-    	{
-    		if(vertex.equals(vertLabel))
-    		{
-    			return true;
-    		}
-    	}
-    	return false;
-    }
     //Check if edge exists in iMatrix
     private boolean edgeExists(T srcLabel, T tarLabel)
     {	
