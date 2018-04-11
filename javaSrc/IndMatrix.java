@@ -38,16 +38,16 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     
     public void addEdge(T srcLabel, T tarLabel) 
     {
-    	if(vertexExists(srcLabel) && vertexExists(tarLabel) && !edgeExists(srcLabel, tarLabel) && !srcLabel.equals(tarLabel))
+    	if(!edgeExists(srcLabel, tarLabel) && !srcLabel.equals(tarLabel))
     	{
 	    	Edge<T> newEdge = new Edge<T>(srcLabel, tarLabel);
-	    	
-	    	edgeList.put(newEdge, (iMatrix[0].length));
+	    	int length = iMatrix[0].length;
+	    	edgeList.put(newEdge, length);
 	    	
 	    	expandArray();
 
-	    	iMatrix[vertList.get(srcLabel)][edgeList.get(newEdge)]=1;
-	    	iMatrix[vertList.get(tarLabel)][edgeList.get(newEdge)]=1;
+	    	iMatrix[vertList.get(srcLabel)][length]=1;
+	    	iMatrix[vertList.get(tarLabel)][length]=1;
 
 	    	
     	}
