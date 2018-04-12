@@ -147,37 +147,39 @@ public class AdjMatrix <T extends Object> implements FriendshipGraph<T>
     
     public int shortestPathDistance(T vertLabel1, T vertLabel2) {
     	// Implement me!
-    	
-    	int vert1Index;
-    	int vert2Index = this.verIndecies.get(vertLabel2);
+    	Map<T,T> path = new HashMap<T,T>();
     	LinkedList<T> queue = new LinkedList<T>();
-    	boolean[] visited = new boolean[this.aMatrix.length];
-    	int count = 0;
+    	List<T> shortestPath;
+    	T vertex, currentV;
+    	
     	queue.add(vertLabel1);
-    	T vertex;
     	
     	while(!queue.isEmpty())
     	{
-    		vertex = queue.poll();
-    		vert1Index = this.verIndecies.get(vertex);
-    		visited[vert1Index] = true;
-    		count++;
+    		currentV = queue.poll();
     		
-    		if(this.aMatrix[vert1Index][vert2Index] == 1) {
-    			return count;
-    		}
+    		if(currentV.equals(vertLabel2))
+            {
+            	 shortestPath = new ArrayList<>();
+            	 vertex = vertLabel2;
+            	 while(vertex != null) 
+            	 {
+            	    shortestPath.add(vertex);
+            	    vertex = path.get(vertex);
+            	 }
+            	 //The starting vertex is not counted
+            	 shortestPath.remove(vertLabel1);
+            	 return shortestPath.size();
+            }
     		
-    		for(T vert : neighbours(vertex))
+    		for(T neighbour : neighbours(currentV))
     		{
-    			if(visited[this.verIndecies.get(vert)] == true)
-    			{
-    				continue;
-    			}
-    			if(queue.contains(vert) == false)
-    			{
-    				queue.add(vert);
-    			}
-    				
+    			if(path.containsKey(neighbour) || path.containsValue(neighbour))
+            	{
+            		continue;
+            	}
+            	path.put(neighbour, currentV);
+            	queue.add(neighbour);
     		}
     		
     	}

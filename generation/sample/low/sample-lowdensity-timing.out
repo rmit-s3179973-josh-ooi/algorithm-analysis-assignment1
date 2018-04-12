@@ -1,0 +1,72 @@
+AV 4039: 1.916E-6 sec 
+AV 4040: 1.635E-6 sec 
+AV 4041: 4.66E-7 sec 
+AV 4042: 3.83E-7 sec 
+AV 4043: 3.32E-7 sec 
+AV 4044: 2.47E-7 sec 
+AV 4045: 3.92E-7 sec 
+AV 4046: 2.81E-7 sec 
+AV 4047: 3.21E-7 sec 
+AV 4048: 7.53E-7 sec 
+Add Vertex average time : 6.726000000000001E-7
+
+AE 4039 100: 6.293E-6 sec 
+AE 4039 300: 1.828E-6 sec 
+AE 4039 1405: 3.073E-6 sec 
+AE 4039 1500: 3.764E-6 sec 
+AE 4040 188: 2.154E-6 sec 
+AE 4040 280: 1.41E-6 sec 
+AE 4040 150: 1.237E-6 sec 
+AE 4040 320: 1.36E-6 sec 
+AE 4042 4040: 8.39E-7 sec 
+AE 4041 1864: 8.616E-6 sec 
+Add Edge average time : 3.0573999999999997E-6
+
+N 100: 2.9813E-5 sec 
+N 500: 1.1308E-5 sec 
+N 600: 1.1924E-5 sec 
+N 700: 7.358E-6 sec 
+N 1300: 1.1535E-5 sec 
+N 450: 5.891E-6 sec 
+N 900: 7.461E-6 sec 
+N 345: 5.051E-6 sec 
+N 650: 9.231E-6 sec 
+N 444: 5.702E-6 sec 
+neighbour average time : 1.05274E-5
+
+S 4039 4040: 0.016033651 sec 
+S 1300 100: 0.008308699 sec 
+S 450 650: 0.007715405 sec 
+S 60 1243: 0.004009232 sec 
+S 111 55: 3.55867E-4 sec 
+S 123 542: 0.009341894 sec 
+S 505 232: 0.01008159 sec 
+S 222 1299: 0.005794964 sec 
+S 773 1100: 0.002819066 sec 
+S 1000 20: 0.006806806 sec 
+shortest path average time : 0.0071267174
+
+RV 4039: 2.13614E-4 sec 
+RV 4040: 5.294E-6 sec 
+RV 4041: 7.415E-6 sec 
+RV 4042: 3.376E-6 sec 
+RV 4043: 3.368E-6 sec 
+RV 4044: 3.417E-6 sec 
+RV 4045: 3.645E-6 sec 
+RV 4046: 3.911E-6 sec 
+RV 4047: 3.45E-6 sec 
+RV 4048: 3.793E-6 sec 
+remove Vertex average time : 2.5128299999999998E-5
+
+RE 4039 100: 5.6348E-5 sec 
+RE 4039 300: 1.0138E-5 sec 
+RE 4039 1405: 3.482E-6 sec 
+RE 4039 1500: 4.002E-6 sec 
+RE 4040 188: 3.352E-6 sec 
+RE 4040 280: 2.759E-6 sec 
+RE 4040 150: 2.652E-6 sec 
+RE 4040 320: 2.363E-6 sec 
+RE 4042 4040: 2.942E-6 sec 
+RE 4041 1864: 1.0491E-5 sec 
+remove edge average time : 9.852900000000002E-6
+

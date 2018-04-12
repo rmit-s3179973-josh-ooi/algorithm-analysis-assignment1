@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * Incidence matrix implementation for the FriendshipGraph interface.
@@ -120,12 +121,39 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     public ArrayList<T> neighbours(T vertLabel) 
     {
     	ArrayList<T> neighbours = new ArrayList<T>();
-    	if(!vertList.containsKey(vertLabel))
+    	Integer vertIndex = vertList.get(vertLabel); // get vertex imatrix row
+    	
+    	// check if vertex exist
+    	if(vertIndex == null)
     	{
     		return neighbours;
     	}
-
-    	for(T checkVer : vertList.keySet())
+    	
+    	// iterate through imatrix columns
+    	for(int i = 0; i< iMatrix[0].length; i++)
+    	{
+    		// check if the edge exist
+    		if(iMatrix[vertIndex][i] == 1)
+    		{
+    			// iterate edge list to find the edge
+    			for(Entry<Edge<T>, Integer> e : this.edgeList.entrySet())
+    			{
+    				// check if the current edge matches the edge index
+    				if(e.getValue() == i)
+    				{
+    					// add neighbour to the list
+    					if(e.getKey().getSrcVertex().equals(vertLabel))
+    					{
+    						neighbours.add(e.getKey().getTarVertex());
+    					}else {
+    						neighbours.add(e.getKey().getSrcVertex());
+    					}
+    				}
+    			}
+    		}
+    	}
+    	
+    	/*for(T checkVer : vertList.keySet())
     	{
 	    	for(int i = 0; i<iMatrix[0].length; i++)
 	    	{
@@ -141,7 +169,7 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
 	    		}
 	    	}
 	    	
-    	}
+    	}*/
 		
 		return neighbours;
     } // end of neighbours()
@@ -174,7 +202,8 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
     	{
 	    	Map<T,T> path = new HashMap<T,T>();
 	        Queue<T> q = new LinkedList<T>();
-	        T currentV;
+	        T currentV, vertex;
+	        List<T> shortestPath;
 	        
 	        q.add(vertLabel1);
 	
@@ -184,8 +213,8 @@ public class IndMatrix <T extends Object> implements FriendshipGraph<T>
 	            //This block extracts the shortest path from the hashmap and returns its length
 	            if(currentV.equals(vertLabel2))
 	            {
-	            	 List<T> shortestPath = new ArrayList<>();
-	            	 T vertex = vertLabel2;
+	            	 shortestPath = new ArrayList<>();
+	            	 vertex = vertLabel2;
 	            	 while(vertex != null) 
 	            	 {
 	            	    shortestPath.add(vertex);
