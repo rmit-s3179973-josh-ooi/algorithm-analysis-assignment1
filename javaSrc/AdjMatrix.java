@@ -31,8 +31,11 @@ public class AdjMatrix <T extends Object> implements FriendshipGraph<T>
     
     public void addVertex(T vertLabel) 
     {
+//    	check if vertex exist
     	if(!verIndecies.containsKey(vertLabel)) {
+    		// add vertex
     		verIndecies.put(vertLabel, verIndecies.size());
+    		// expand matrix to fit new vertex
     		expandArray();
     	}
     } // end of addVertex()
@@ -44,8 +47,10 @@ public class AdjMatrix <T extends Object> implements FriendshipGraph<T>
     	Integer srcIndex = verIndecies.get(srcLabel);
     	Integer tarIndex = verIndecies.get(tarLabel);
     	
+    	// check if vertices exist
     	if(srcIndex != null && tarIndex != null)
     	{
+    		// set edge to 1
         	this.aMatrix[srcIndex][tarIndex]= 1;
         	this.aMatrix[tarIndex][srcIndex]= 1;
     	}
@@ -58,12 +63,15 @@ public class AdjMatrix <T extends Object> implements FriendshipGraph<T>
     {
         ArrayList<T> neighbours = new ArrayList<T>();
         
+        // get vertex matrix index
         int index = this.verIndecies.get(vertLabel);
         
+        // search the matrix for neighbours
         for(int i = 0; i < this.aMatrix.length; i++)
         {
         	if(this.aMatrix[index][i] == 1)
         	{
+        		// add neighbour vertex into the list
         		neighbours.add(getVertexByValue(i));
         	}
         }
@@ -74,12 +82,16 @@ public class AdjMatrix <T extends Object> implements FriendshipGraph<T>
     
     public void removeVertex(T vertLabel) 
     {
+    	// check if vertex exist
     	if(this.verIndecies.containsKey(vertLabel))
     	{
+    		// get the vertex matrix index
     		int removevalue = this.verIndecies.get(vertLabel);
         	
+    		// rmove vertex from vertex list
         	this.verIndecies.remove(vertLabel);
         	
+        	// change the value 
         	for(Map.Entry<T, Integer> entry : this.verIndecies.entrySet()) {
         	
         		T key = entry.getKey();
@@ -90,7 +102,7 @@ public class AdjMatrix <T extends Object> implements FriendshipGraph<T>
         	    	this.verIndecies.replace(key, value-1);
         	    }
         	}
-        	
+        	// shrink the matrix
         	removeVertexFromMatrix(removevalue);
     	}
     	
@@ -101,6 +113,8 @@ public class AdjMatrix <T extends Object> implements FriendshipGraph<T>
     {
     	Integer srcIndex = verIndecies.get(srcLabel);
     	Integer tarIndex = verIndecies.get(tarLabel);
+    	
+    	// check if vertex exist
     	if(srcIndex != null && tarIndex != null)
     	{
     		aMatrix[srcIndex][tarIndex] = 0;
@@ -113,8 +127,8 @@ public class AdjMatrix <T extends Object> implements FriendshipGraph<T>
     
     public void printVertices(PrintWriter os) 
     {
-        // Implement me!
-    		String output = "";
+    	String output = "";
+    		
         for(T vertex : this.verIndecies.keySet())
         {
         		output +=vertex.toString()+" "; 
@@ -141,7 +155,7 @@ public class AdjMatrix <T extends Object> implements FriendshipGraph<T>
     			}
     		}
     		os.println(holder);
-        // Implement me!
+
     } // end of printEdges()
     
     
@@ -152,12 +166,15 @@ public class AdjMatrix <T extends Object> implements FriendshipGraph<T>
     	List<T> shortestPath;
     	T vertex, currentV;
     	
+    	// add begining vertex into the queue
     	queue.add(vertLabel1);
+    	
     	
     	while(!queue.isEmpty())
     	{
     		currentV = queue.poll();
     		
+    		// check if the current vertex from the queue equals the target vertex
     		if(currentV.equals(vertLabel2))
             {
             	 shortestPath = new ArrayList<>();
@@ -172,8 +189,10 @@ public class AdjMatrix <T extends Object> implements FriendshipGraph<T>
             	 return shortestPath.size();
             }
     		
+    		// get the neighbour vertex of the current vertex
     		for(T neighbour : neighbours(currentV))
     		{
+    			// check if the vertex is visited
     			if(path.containsKey(neighbour) || path.containsValue(neighbour))
             	{
             		continue;
